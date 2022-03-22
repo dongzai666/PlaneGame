@@ -252,6 +252,7 @@ class PlaneGame(object):
                     if Rank_list.check_click(pygame.mouse.get_pos()):
                         break
                 
+
             #绘制得分情况
             print("排行榜！！！")
             self.screen.blit(PlaneGame.gameover_background,(0,0))
@@ -261,6 +262,10 @@ class PlaneGame(object):
             score_Rant = score_font.render("Rant",True,(0,0,255))
             score_Name = score_font.render("Name",True,(0,0,255))
             score_nu = score_font.render("Score",True,(0,0,255))
+
+            #退出按钮
+            logout_button = Button('退出游戏',200,600)
+            logout_button_text = score_font.render(logout_button.text,True,(0,255,0))
 
             self.screen.blit(score_Rant,(120,50))
             self.screen.blit(score_Name,(200,50))
@@ -276,14 +281,23 @@ class PlaneGame(object):
                 j+=1
             pygame.display.update()
             while True:
+                if logout_button.check_click(pygame.mouse.get_pos()):
+                    logout_button_text = score_font.render(logout_button.text,True,(255,0,0))
+                    self.screen.blit(logout_button_text,(logout_button.x,logout_button.y))
+                else:
+                    logout_button_text= score_font.render(logout_button.text,True,(0,255,0))
+                    self.screen.blit(logout_button_text,(logout_button.x,logout_button.y))
+
+                pygame.display.update()
                 for event in  pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         exit()
-                time.sleep(1)
+                if pygame.mouse.get_pressed()[0]:
+                    if logout_button.check_click(pygame.mouse.get_pos()):
+                       pygame.quit()
+                       exit() 
 
-            # pygame.quit()
-            
     #敌机爆炸效果
     def __enemy_destory(self,x,y):
 
@@ -370,7 +384,6 @@ class PlaneGame(object):
     def __game_over():
         # 结束游戏
         pygame.quit()
-        passS
 
 
 #防止按钮卡死，守护进程              
